@@ -32,7 +32,14 @@
   <title>warm_up_wizard</title>
   <link rel="manifest" href="manifest.json">
 
-  <!-- Load sql.js so Drift WebDatabase can run on the web -->
+  <!-- Configure sql.js to load its wasm from CDN, then load the library -->
+  <script>
+    window.Module = {
+      locateFile: function(file) {
+        return "https://cdn.jsdelivr.net/npm/sql.js@1.9.0/dist/" + file;
+      }
+    };
+  </script>
   <script defer src="https://cdn.jsdelivr.net/npm/sql.js@1.9.0/dist/sql-wasm.js"></script>
 </head>
 <body>
