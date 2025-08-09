@@ -1,0 +1,918 @@
+[
+  {
+    "id": "jumping_jacks",
+    "name": "Jumping Jacks",
+    "tags": ["cardio", "whole_body", "coordination"],
+    "grade_min": 0,
+    "grade_max": 8,
+    "needs_space": "classroom",
+    "needs_equipment": [],
+    "impact": "moderate",
+    "noise": "moderate",
+    "allow_floor": false,
+    "default_duration_s": 30,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "ready",
+          "keyframes": [
+            {
+              "id": "start",
+              "jointAngles": {
+                "left_shoulder": 0,
+                "right_shoulder": 0,
+                "left_elbow": 0,
+                "right_elbow": 0,
+                "left_hip": 0,
+                "right_hip": 0,
+                "left_knee": 0,
+                "right_knee": 0
+              },
+              "description": "Standing ready position"
+            }
+          ],
+          "durationMs": 500,
+          "easing": "ease-in-out"
+        },
+        {
+          "name": "jump_out",
+          "keyframes": [
+            {
+              "id": "spread",
+              "jointAngles": {
+                "left_shoulder": 160,
+                "right_shoulder": 160,
+                "left_elbow": -10,
+                "right_elbow": -10,
+                "left_hip": 30,
+                "right_hip": -30,
+                "left_knee": -5,
+                "right_knee": -5
+              },
+              "description": "Arms up, legs apart"
+            }
+          ],
+          "durationMs": 250,
+          "easing": "ease-out"
+        }
+      ]
+    }
+  },
+  {
+    "id": "high_knees",
+    "name": "High Knees",
+    "tags": ["cardio", "legs", "core"],
+    "grade_min": 0,
+    "grade_max": 8,
+    "needs_space": "classroom",
+    "needs_equipment": [],
+    "impact": "moderate",
+    "noise": "moderate",
+    "allow_floor": false,
+    "default_duration_s": 30,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "ready",
+          "keyframes": [
+            {
+              "id": "start",
+              "jointAngles": {
+                "left_shoulder": 0,
+                "right_shoulder": 0,
+                "left_elbow": 90,
+                "right_elbow": 90,
+                "left_hip": 0,
+                "right_hip": 0,
+                "left_knee": 0,
+                "right_knee": 0
+              },
+              "description": "Arms bent, ready to march"
+            }
+          ],
+          "durationMs": 200,
+          "easing": "ease-in-out"
+        },
+        {
+          "name": "left_knee_up",
+          "keyframes": [
+            {
+              "id": "left_high",
+              "jointAngles": {
+                "left_shoulder": 45,
+                "right_shoulder": -45,
+                "left_elbow": 90,
+                "right_elbow": 90,
+                "left_hip": 90,
+                "right_hip": 0,
+                "left_knee": 90,
+                "right_knee": 0
+              },
+              "description": "Left knee up, opposite arm swing"
+            }
+          ],
+          "durationMs": 200,
+          "easing": "ease-in-out"
+        }
+      ]
+    }
+  },
+  {
+    "id": "skaters",
+    "name": "Skaters",
+    "tags": ["cardio", "lateral", "balance"],
+    "grade_min": 1,
+    "grade_max": 8,
+    "needs_space": "halfGym",
+    "needs_equipment": [],
+    "impact": "moderate",
+    "noise": "moderate",
+    "allow_floor": false,
+    "default_duration_s": 40,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "center",
+          "keyframes": [
+            {
+              "id": "ready",
+              "jointAngles": {
+                "left_shoulder": 0,
+                "right_shoulder": 0,
+                "left_elbow": 0,
+                "right_elbow": 0,
+                "left_hip": 0,
+                "right_hip": 0,
+                "left_knee": 15,
+                "right_knee": 15
+              },
+              "description": "Slight squat, ready to push off"
+            }
+          ],
+          "durationMs": 200,
+          "easing": "ease-in-out"
+        }
+      ]
+    }
+  },
+  {
+    "id": "arm_circles",
+    "name": "Arm Circles",
+    "tags": ["mobility", "shoulders", "warmup"],
+    "grade_min": 0,
+    "grade_max": 8,
+    "needs_space": "classroom",
+    "needs_equipment": [],
+    "impact": "low",
+    "noise": "quiet",
+    "allow_floor": false,
+    "default_duration_s": 30,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "forward_circles",
+          "keyframes": [
+            {
+              "id": "up",
+              "jointAngles": {
+                "left_shoulder": 180,
+                "right_shoulder": 180,
+                "left_elbow": 0,
+                "right_elbow": 0,
+                "left_hip": 0,
+                "right_hip": 0,
+                "left_knee": 0,
+                "right_knee": 0
+              },
+              "description": "Arms straight up"
+            }
+          ],
+          "durationMs": 1000,
+          "easing": "linear"
+        }
+      ]
+    }
+  },
+  {
+    "id": "toe_taps",
+    "name": "Toe Taps",
+    "tags": ["cardio", "legs", "coordination"],
+    "grade_min": 0,
+    "grade_max": 8,
+    "needs_space": "classroom",
+    "needs_equipment": [],
+    "impact": "low",
+    "noise": "quiet",
+    "allow_floor": false,
+    "default_duration_s": 30,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "left_tap",
+          "keyframes": [
+            {
+              "id": "tap",
+              "jointAngles": {
+                "left_shoulder": 0,
+                "right_shoulder": 0,
+                "left_elbow": 0,
+                "right_elbow": 0,
+                "left_hip": 15,
+                "right_hip": 0,
+                "left_knee": 0,
+                "right_knee": 0
+              },
+              "description": "Left toe taps forward"
+            }
+          ],
+          "durationMs": 250,
+          "easing": "ease-in-out"
+        }
+      ]
+    }
+  },
+  {
+    "id": "side_steps",
+    "name": "Side Steps",
+    "tags": ["cardio", "lateral", "legs"],
+    "grade_min": 0,
+    "grade_max": 8,
+    "needs_space": "halfGym",
+    "needs_equipment": [],
+    "impact": "low",
+    "noise": "moderate",
+    "allow_floor": false,
+    "default_duration_s": 30,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "step_right",
+          "keyframes": [
+            {
+              "id": "wide_stance",
+              "jointAngles": {
+                "left_shoulder": 0,
+                "right_shoulder": 0,
+                "left_elbow": 90,
+                "right_elbow": 90,
+                "left_hip": 0,
+                "right_hip": 0,
+                "left_knee": 15,
+                "right_knee": 15
+              },
+              "description": "Wide stance with bent knees"
+            }
+          ],
+          "durationMs": 300,
+          "easing": "ease-in-out"
+        }
+      ]
+    }
+  },
+  {
+    "id": "fast_feet",
+    "name": "Fast Feet",
+    "tags": ["cardio", "agility", "legs"],
+    "grade_min": 1,
+    "grade_max": 8,
+    "needs_space": "classroom",
+    "needs_equipment": [],
+    "impact": "moderate",
+    "noise": "moderate",
+    "allow_floor": false,
+    "default_duration_s": 20,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "running_in_place",
+          "keyframes": [
+            {
+              "id": "quick_step",
+              "jointAngles": {
+                "left_shoulder": 30,
+                "right_shoulder": -30,
+                "left_elbow": 90,
+                "right_elbow": 90,
+                "left_hip": 30,
+                "right_hip": 0,
+                "left_knee": 45,
+                "right_knee": 0
+              },
+              "description": "Quick alternating steps"
+            }
+          ],
+          "durationMs": 100,
+          "easing": "linear"
+        }
+      ]
+    }
+  },
+  {
+    "id": "cross_crawl",
+    "name": "Cross-Crawl",
+    "tags": ["coordination", "core", "brain_gym"],
+    "grade_min": 0,
+    "grade_max": 8,
+    "needs_space": "classroom",
+    "needs_equipment": [],
+    "impact": "low",
+    "noise": "quiet",
+    "allow_floor": false,
+    "default_duration_s": 30,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "right_elbow_left_knee",
+          "keyframes": [
+            {
+              "id": "cross_pattern",
+              "jointAngles": {
+                "left_shoulder": -45,
+                "right_shoulder": 45,
+                "left_elbow": 90,
+                "right_elbow": 90,
+                "left_hip": 45,
+                "right_hip": 0,
+                "left_knee": 90,
+                "right_knee": 0
+              },
+              "description": "Right elbow touches left knee"
+            }
+          ],
+          "durationMs": 500,
+          "easing": "ease-in-out"
+        }
+      ]
+    }
+  },
+  {
+    "id": "inch_worm_classroom",
+    "name": "Inch Worm (Classroom)",
+    "tags": ["strength", "flexibility", "core"],
+    "grade_min": 2,
+    "grade_max": 8,
+    "needs_space": "classroom",
+    "needs_equipment": [],
+    "impact": "low",
+    "noise": "quiet",
+    "allow_floor": false,
+    "default_duration_s": 45,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "forward_fold_reach",
+          "keyframes": [
+            {
+              "id": "reach_down",
+              "jointAngles": {
+                "left_shoulder": 45,
+                "right_shoulder": 45,
+                "left_elbow": 0,
+                "right_elbow": 0,
+                "left_hip": 90,
+                "right_hip": 90,
+                "left_knee": 0,
+                "right_knee": 0
+              },
+              "description": "Reach down towards toes"
+            }
+          ],
+          "durationMs": 2000,
+          "easing": "ease-in-out"
+        }
+      ]
+    }
+  },
+  {
+    "id": "balance_hold",
+    "name": "Balance Hold",
+    "tags": ["balance", "stability", "core"],
+    "grade_min": 0,
+    "grade_max": 8,
+    "needs_space": "classroom",
+    "needs_equipment": [],
+    "impact": "low",
+    "noise": "quiet",
+    "allow_floor": false,
+    "default_duration_s": 30,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "single_leg_stand",
+          "keyframes": [
+            {
+              "id": "balance",
+              "jointAngles": {
+                "left_shoulder": 0,
+                "right_shoulder": 0,
+                "left_elbow": 0,
+                "right_elbow": 0,
+                "left_hip": 90,
+                "right_hip": 0,
+                "left_knee": 90,
+                "right_knee": 0
+              },
+              "description": "Standing on one leg"
+            }
+          ],
+          "durationMs": 3000,
+          "easing": "linear"
+        }
+      ]
+    }
+  },
+  {
+    "id": "wall_sit",
+    "name": "Wall Sit",
+    "tags": ["strength", "legs", "endurance"],
+    "grade_min": 3,
+    "grade_max": 8,
+    "needs_space": "hallway",
+    "needs_equipment": [],
+    "impact": "low",
+    "noise": "quiet",
+    "allow_floor": false,
+    "default_duration_s": 30,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "squat_against_wall",
+          "keyframes": [
+            {
+              "id": "wall_squat",
+              "jointAngles": {
+                "left_shoulder": 0,
+                "right_shoulder": 0,
+                "left_elbow": 0,
+                "right_elbow": 0,
+                "left_hip": 90,
+                "right_hip": 90,
+                "left_knee": 90,
+                "right_knee": 90
+              },
+              "description": "Sitting against wall with 90-degree angles"
+            }
+          ],
+          "durationMs": 3000,
+          "easing": "linear"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mountain_climber",
+    "name": "Mountain Climber (Space-Aware)",
+    "tags": ["cardio", "core", "strength"],
+    "grade_min": 2,
+    "grade_max": 8,
+    "needs_space": "halfGym",
+    "needs_equipment": [],
+    "impact": "moderate",
+    "noise": "moderate",
+    "allow_floor": true,
+    "default_duration_s": 30,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "plank_alternating",
+          "keyframes": [
+            {
+              "id": "knee_to_chest",
+              "jointAngles": {
+                "left_shoulder": 0,
+                "right_shoulder": 0,
+                "left_elbow": 0,
+                "right_elbow": 0,
+                "left_hip": 90,
+                "right_hip": 0,
+                "left_knee": 90,
+                "right_knee": 0
+              },
+              "description": "One knee drawn to chest in plank"
+            }
+          ],
+          "durationMs": 250,
+          "easing": "ease-in-out"
+        }
+      ]
+    }
+  },
+  {
+    "id": "march_in_place",
+    "name": "March in Place",
+    "tags": ["cardio", "coordination", "warm_up"],
+    "grade_min": 0,
+    "grade_max": 8,
+    "needs_space": "classroom",
+    "needs_equipment": [],
+    "impact": "low",
+    "noise": "quiet",
+    "allow_floor": false,
+    "default_duration_s": 30,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "marching_step",
+          "keyframes": [
+            {
+              "id": "left_knee_up",
+              "jointAngles": {
+                "left_shoulder": 45,
+                "right_shoulder": -45,
+                "left_elbow": 90,
+                "right_elbow": 90,
+                "left_hip": 90,
+                "right_hip": 0,
+                "left_knee": 90,
+                "right_knee": 0
+              },
+              "description": "Left knee up with opposite arm swing"
+            }
+          ],
+          "durationMs": 500,
+          "easing": "ease-in-out"
+        }
+      ]
+    }
+  },
+  {
+    "id": "shuttle_touch",
+    "name": "Shuttle Touch",
+    "tags": ["agility", "speed", "cardio"],
+    "grade_min": 2,
+    "grade_max": 8,
+    "needs_space": "fullGym",
+    "needs_equipment": ["cones"],
+    "impact": "high",
+    "noise": "moderate",
+    "allow_floor": false,
+    "default_duration_s": 45,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "sprint_and_touch",
+          "keyframes": [
+            {
+              "id": "sprint_ready",
+              "jointAngles": {
+                "left_shoulder": 0,
+                "right_shoulder": 0,
+                "left_elbow": 90,
+                "right_elbow": 90,
+                "left_hip": 0,
+                "right_hip": 0,
+                "left_knee": 30,
+                "right_knee": 30
+              },
+              "description": "Ready to sprint to cone"
+            }
+          ],
+          "durationMs": 500,
+          "easing": "ease-out"
+        }
+      ]
+    }
+  },
+  {
+    "id": "four_corner_jog",
+    "name": "Four-Corner Jog",
+    "tags": ["cardio", "agility", "direction_change"],
+    "grade_min": 1,
+    "grade_max": 8,
+    "needs_space": "fullGym",
+    "needs_equipment": ["cones"],
+    "impact": "moderate",
+    "noise": "moderate",
+    "allow_floor": false,
+    "default_duration_s": 60,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "jogging",
+          "keyframes": [
+            {
+              "id": "jog_form",
+              "jointAngles": {
+                "left_shoulder": 30,
+                "right_shoulder": -30,
+                "left_elbow": 90,
+                "right_elbow": 90,
+                "left_hip": 30,
+                "right_hip": 0,
+                "left_knee": 45,
+                "right_knee": 0
+              },
+              "description": "Jogging between cones"
+            }
+          ],
+          "durationMs": 400,
+          "easing": "linear"
+        }
+      ]
+    }
+  },
+  {
+    "id": "zigzag_weave",
+    "name": "Zig-Zag Weave",
+    "tags": ["agility", "coordination", "lateral"],
+    "grade_min": 2,
+    "grade_max": 8,
+    "needs_space": "halfGym",
+    "needs_equipment": ["cones"],
+    "impact": "moderate",
+    "noise": "moderate",
+    "allow_floor": false,
+    "default_duration_s": 45,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "weaving",
+          "keyframes": [
+            {
+              "id": "side_step_lean",
+              "jointAngles": {
+                "left_shoulder": -15,
+                "right_shoulder": 15,
+                "left_elbow": 45,
+                "right_elbow": 45,
+                "left_hip": 15,
+                "right_hip": -15,
+                "left_knee": 20,
+                "right_knee": 20
+              },
+              "description": "Leaning into turns around cones"
+            }
+          ],
+          "durationMs": 600,
+          "easing": "ease-in-out"
+        }
+      ]
+    }
+  },
+  {
+    "id": "agility_box",
+    "name": "Agility Box",
+    "tags": ["agility", "footwork", "coordination"],
+    "grade_min": 3,
+    "grade_max": 8,
+    "needs_space": "halfGym",
+    "needs_equipment": ["cones"],
+    "impact": "moderate",
+    "noise": "moderate",
+    "allow_floor": false,
+    "default_duration_s": 45,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "box_pattern",
+          "keyframes": [
+            {
+              "id": "quick_feet",
+              "jointAngles": {
+                "left_shoulder": 15,
+                "right_shoulder": -15,
+                "left_elbow": 90,
+                "right_elbow": 90,
+                "left_hip": 20,
+                "right_hip": -20,
+                "left_knee": 30,
+                "right_knee": 15
+              },
+              "description": "Quick feet moving in box pattern"
+            }
+          ],
+          "durationMs": 200,
+          "easing": "linear"
+        }
+      ]
+    }
+  },
+  {
+    "id": "chest_pass_shadow",
+    "name": "Chest Pass Shadow",
+    "tags": ["coordination", "arms", "basketball"],
+    "grade_min": 1,
+    "grade_max": 8,
+    "needs_space": "classroom",
+    "needs_equipment": ["balls"],
+    "impact": "low",
+    "noise": "quiet",
+    "allow_floor": false,
+    "default_duration_s": 30,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "chest_pass_motion",
+          "keyframes": [
+            {
+              "id": "ready_position",
+              "jointAngles": {
+                "left_shoulder": -30,
+                "right_shoulder": -30,
+                "left_elbow": 90,
+                "right_elbow": 90,
+                "left_hip": 0,
+                "right_hip": 0,
+                "left_knee": 15,
+                "right_knee": 15
+              },
+              "description": "Holding imaginary ball at chest"
+            }
+          ],
+          "durationMs": 300,
+          "easing": "ease-out"
+        }
+      ]
+    }
+  },
+  {
+    "id": "figure8_dribble_air",
+    "name": "Figure-8 Dribble (Air)",
+    "tags": ["coordination", "basketball", "hands"],
+    "grade_min": 2,
+    "grade_max": 8,
+    "needs_space": "classroom",
+    "needs_equipment": ["balls"],
+    "impact": "low",
+    "noise": "quiet",
+    "allow_floor": false,
+    "default_duration_s": 45,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "figure8_motion",
+          "keyframes": [
+            {
+              "id": "around_legs",
+              "jointAngles": {
+                "left_shoulder": 30,
+                "right_shoulder": -30,
+                "left_elbow": 45,
+                "right_elbow": 135,
+                "left_hip": 0,
+                "right_hip": 0,
+                "left_knee": 30,
+                "right_knee": 30
+              },
+              "description": "Moving imaginary ball around legs"
+            }
+          ],
+          "durationMs": 800,
+          "easing": "ease-in-out"
+        }
+      ]
+    }
+  },
+  {
+    "id": "wall_toss",
+    "name": "Wall Toss",
+    "tags": ["coordination", "catching", "reaction"],
+    "grade_min": 1,
+    "grade_max": 8,
+    "needs_space": "hallway",
+    "needs_equipment": ["balls"],
+    "impact": "low",
+    "noise": "moderate",
+    "allow_floor": false,
+    "default_duration_s": 45,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "underhand_toss",
+          "keyframes": [
+            {
+              "id": "toss_motion",
+              "jointAngles": {
+                "left_shoulder": -45,
+                "right_shoulder": -45,
+                "left_elbow": 30,
+                "right_elbow": 30,
+                "left_hip": 0,
+                "right_hip": 0,
+                "left_knee": 15,
+                "right_knee": 15
+              },
+              "description": "Gentle underhand toss to wall"
+            }
+          ],
+          "durationMs": 500,
+          "easing": "ease-out"
+        }
+      ]
+    }
+  },
+  {
+    "id": "invisible_jump_rope",
+    "name": "Invisible Jump Rope",
+    "tags": ["cardio", "coordination", "jumping"],
+    "grade_min": 1,
+    "grade_max": 8,
+    "needs_space": "classroom",
+    "needs_equipment": ["ropes"],
+    "impact": "moderate",
+    "noise": "moderate",
+    "allow_floor": false,
+    "default_duration_s": 45,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "rope_jumping",
+          "keyframes": [
+            {
+              "id": "jump_ready",
+              "jointAngles": {
+                "left_shoulder": 0,
+                "right_shoulder": 0,
+                "left_elbow": 90,
+                "right_elbow": 90,
+                "left_hip": 0,
+                "right_hip": 0,
+                "left_knee": 15,
+                "right_knee": 15
+              },
+              "description": "Small jumps with rope motion"
+            }
+          ],
+          "durationMs": 300,
+          "easing": "linear"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alternate_foot_step",
+    "name": "Alternate Foot Step",
+    "tags": ["coordination", "rhythm", "stepping"],
+    "grade_min": 0,
+    "grade_max": 8,
+    "needs_space": "classroom",
+    "needs_equipment": ["ropes"],
+    "impact": "low",
+    "noise": "quiet",
+    "allow_floor": false,
+    "default_duration_s": 30,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "alternating_steps",
+          "keyframes": [
+            {
+              "id": "step_over",
+              "jointAngles": {
+                "left_shoulder": 0,
+                "right_shoulder": 0,
+                "left_elbow": 90,
+                "right_elbow": 90,
+                "left_hip": 30,
+                "right_hip": 0,
+                "left_knee": 45,
+                "right_knee": 0
+              },
+              "description": "Stepping over imaginary rope"
+            }
+          ],
+          "durationMs": 400,
+          "easing": "ease-in-out"
+        }
+      ]
+    }
+  },
+  {
+    "id": "side_to_side_hop",
+    "name": "Side-to-Side Hop",
+    "tags": ["lateral", "coordination", "jumping"],
+    "grade_min": 1,
+    "grade_max": 8,
+    "needs_space": "classroom",
+    "needs_equipment": ["ropes"],
+    "impact": "moderate",
+    "noise": "moderate",
+    "allow_floor": false,
+    "default_duration_s": 30,
+    "keyframes": {
+      "poses": [
+        {
+          "name": "lateral_hop",
+          "keyframes": [
+            {
+              "id": "hop_right",
+              "jointAngles": {
+                "left_shoulder": 0,
+                "right_shoulder": 0,
+                "left_elbow": 90,
+                "right_elbow": 90,
+                "left_hip": -15,
+                "right_hip": 15,
+                "left_knee": 20,
+                "right_knee": 20
+              },
+              "description": "Hopping side to side over rope"
+            }
+          ],
+          "durationMs": 350,
+          "easing": "ease-in-out"
+        }
+      ]
+    }
+  }
+]
