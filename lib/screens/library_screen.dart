@@ -195,7 +195,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
           width: 56,
           height: 56,
           decoration: BoxDecoration(
-            color: _getImpactColor(move.impact).withValues(alpha: 0.1),
+            color: _getImpactColor(move.impact).withOpacity(0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Center(
@@ -346,7 +346,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: (color ?? Colors.grey).withValues(alpha: 0.1),
+        color: (color ?? Colors.grey).withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
