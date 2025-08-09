@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:math' as math;
+import 'dart:typed_data';
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:flutter_tts/flutter_tts.dart';
+import 'package:path_provider/path_provider.dart';
 import '../models/routine_models.dart';
 import '../database/database.dart';
 import 'move_service.dart';
@@ -84,19 +87,16 @@ class RoutinePlayerService extends StateNotifier<RoutinePlayerState> {
   final MoveService _moveService;
   Timer? _timer;
   final AudioPlayer _audioPlayer = AudioPlayer();
-  final FlutterTts _tts = FlutterTts();
-  bool _soundEnabled = true;
-  bool _ttsEnabled = true;
+  // Background ambient bytes cache
+  Uint8List? _ambientWav;
+  String? _ambientFilePath;
 
   RoutinePlayerService(this._moveService) : super(const RoutinePlayerState()) {
     _initializeAudio();
   }
 
   Future<void> _initializeAudio() async {
-    await _tts.setLanguage("en-US");
-    await _tts.setSpeechRate(0.8);
-    await _tts.setVolume(0.8);
-    await _tts.setPitch(1.0);
+    // No TTS or sound initialization needed
   }
 
   Future<void> loadRoutine(List<RoutineBlock> blocks) async {
@@ -128,6 +128,7 @@ class RoutinePlayerService extends StateNotifier<RoutinePlayerState> {
 
     if (state.playerState == PlayerState.paused) {
       _startTimer();
+      await _startAmbient();
       state = state.copyWith(playerState: PlayerState.playing);
     } else if (state.playerState == PlayerState.stopped) {
       await _startNewRoutine();
@@ -137,12 +138,14 @@ class RoutinePlayerService extends StateNotifier<RoutinePlayerState> {
   void pause() {
     if (state.playerState == PlayerState.playing) {
       _stopTimer();
+      _pauseAmbient();
       state = state.copyWith(playerState: PlayerState.paused);
     }
   }
 
   void stop() {
     _stopTimer();
+    _stopAmbient();
     state = state.copyWith(
       playerState: PlayerState.stopped,
       currentBlockIndex: 0,
@@ -204,23 +207,11 @@ class RoutinePlayerService extends StateNotifier<RoutinePlayerState> {
     stop();
   }
 
-  void setSoundEnabled(bool enabled) {
-    _soundEnabled = enabled;
-  }
-
-  void setTtsEnabled(bool enabled) {
-    _ttsEnabled = enabled;
-  }
-
   Future<void> _startNewRoutine() async {
     if (state.blocks.isEmpty) return;
-    
     _startTimer();
+    await _startAmbient();
     state = state.copyWith(playerState: PlayerState.playing);
-    
-    if (_ttsEnabled) {
-      await _speak("Starting routine. ${state.currentMove?.name ?? 'First exercise'}");
-    }
   }
 
   void _startTimer() {
@@ -234,40 +225,21 @@ class RoutinePlayerService extends StateNotifier<RoutinePlayerState> {
 
   Future<void> _onTimerTick(Timer timer) async {
     if (state.remainingSeconds > 1) {
-      // Continue current block
       final newRemainingSeconds = state.remainingSeconds - 1;
       state = state.copyWith(remainingSeconds: newRemainingSeconds);
-      
-      // Handle warnings and announcements
       await _handleTimewarnings(newRemainingSeconds);
-      
     } else {
-      // Block finished, move to next or complete routine
       await _moveToNextBlock();
     }
   }
 
   Future<void> _handleTimewarnings(int remainingSeconds) async {
-    // 5-second warning with next move announcement
+    // Show visual cue only; no beeps/tts
     if (remainingSeconds == 5 && state.nextMove != null) {
       state = state.copyWith(
         currentCaption: "Next: ${state.nextMove!.name}",
         isTransitioning: true,
       );
-      
-      if (_ttsEnabled) {
-        await _speak("Next: ${state.nextMove!.name}");
-      }
-    }
-    
-    // Countdown for last 3 seconds
-    if (remainingSeconds <= 3 && remainingSeconds > 0) {
-      if (_soundEnabled) {
-        await _playBeep();
-      }
-      if (_ttsEnabled && remainingSeconds <= 3) {
-        await _speak(remainingSeconds.toString());
-      }
     }
   }
 
@@ -277,18 +249,12 @@ class RoutinePlayerService extends StateNotifier<RoutinePlayerState> {
     if (nextIndex >= state.blocks.length) {
       // Routine completed
       _stopTimer();
+      _stopAmbient();
       state = state.copyWith(
         playerState: PlayerState.completed,
         currentCaption: "Routine Complete! Great job!",
         isTransitioning: false,
       );
-      
-      if (_ttsEnabled) {
-        await _speak("Routine complete! Great job!");
-      }
-      if (_soundEnabled) {
-        await _playCompletionSound();
-      }
       return;
     }
     
@@ -312,15 +278,6 @@ class RoutinePlayerService extends StateNotifier<RoutinePlayerState> {
     );
     
     await _updateNextMove();
-    
-    // Transition beep and announcement
-    if (_soundEnabled) {
-      await _playTransitionBeep();
-    }
-    
-    if (_ttsEnabled) {
-      await _speak(nextMove?.name ?? "Next exercise");
-    }
   }
 
   Future<void> _updateNextMove() async {
@@ -334,40 +291,114 @@ class RoutinePlayerService extends StateNotifier<RoutinePlayerState> {
     }
   }
 
-  Future<void> _speak(String text) async {
+  // === Ambient audio ===
+  Future<void> _startAmbient() async {
     try {
-      await _tts.speak(text);
+      if (_ambientFilePath == null) {
+        // Generate bytes if needed
+        _ambientWav ??= _generateZenPadWav(durationSeconds: 8);
+        // Write to a temp file for iOS/Android compatibility
+        final tmpDir = await getTemporaryDirectory();
+        final file = File('${tmpDir.path}/ambient_zen.wav');
+        await file.writeAsBytes(_ambientWav!, flush: true);
+        _ambientFilePath = file.path;
+        await _audioPlayer.setAudioSource(AudioSource.uri(Uri.file(_ambientFilePath!)));
+        await _audioPlayer.setLoopMode(LoopMode.one);
+        await _audioPlayer.setVolume(0.15);
+      }
+      if (_audioPlayer.playing) return;
+      await _audioPlayer.play();
     } catch (e) {
-      debugPrint('TTS Error: $e');
+      debugPrint('Ambient audio error: $e');
     }
   }
 
-  Future<void> _playBeep() async {
-    try {
-      // Play system sound or generate a simple beep
-      SystemSound.play(SystemSoundType.click);
-    } catch (e) {
-      debugPrint('Sound Error: $e');
+  void _pauseAmbient() {
+    if (_audioPlayer.playing) {
+      _audioPlayer.pause();
     }
   }
 
-  Future<void> _playTransitionBeep() async {
-    try {
-      // Different sound for transitions
-      SystemSound.play(SystemSoundType.alert);
-    } catch (e) {
-      debugPrint('Sound Error: $e');
-    }
+  void _stopAmbient() {
+    _audioPlayer.stop();
   }
 
-  Future<void> _playCompletionSound() async {
-    try {
-      // Completion sound
-      SystemSound.play(SystemSoundType.alert);
-      // Could play a success sound file here if available
-    } catch (e) {
-      debugPrint('Sound Error: $e');
+  // Generate a soft, gentle pad as 16-bit PCM WAV bytes
+  Uint8List _generateZenPadWav({int sampleRate = 44100, int durationSeconds = 8}) {
+    final totalSamples = sampleRate * durationSeconds;
+    final channels = 1;
+    final bytesPerSample = 2; // 16-bit
+
+    // Build PCM samples
+    final pcmBuilder = BytesBuilder();
+    // Frequencies for a C major-like airy chord
+    final freqs = [196.0, 261.63, 329.63, 392.0]; // G3, C4, E4, G4
+    for (int n = 0; n < totalSamples; n++) {
+      final t = n / sampleRate;
+      // Slow attack/decay envelope
+      final attack = 2.0; // seconds
+      final decay = 2.0; // seconds
+      double env = 1.0;
+      if (t < attack) {
+        env = t / attack;
+      } else if (t > durationSeconds - decay) {
+        env = (durationSeconds - t) / decay;
+      }
+      env = env.clamp(0.0, 1.0);
+
+      // Gentle LFO for warmth
+      final lfo = 0.5 + 0.5 * math.sin(2 * math.pi * 0.1 * t);
+
+      double sample = 0.0;
+      for (final f in freqs) {
+        // slight detune per voice
+        final detune = (0.001 * (f % 3)) * math.sin(2 * math.pi * 0.05 * t);
+        sample += math.sin(2 * math.pi * (f + detune) * t);
+      }
+      sample /= freqs.length; // average
+      sample *= (0.15 * env * lfo); // low volume
+
+      // 16-bit PCM conversion
+      final intSample = (sample * 32767).clamp(-32768, 32767).toInt();
+      pcmBuilder.addByte(intSample & 0xFF);
+      pcmBuilder.addByte((intSample >> 8) & 0xFF);
     }
+
+    final pcmBytes = pcmBuilder.toBytes();
+
+    // WAV header
+    final byteCount = pcmBytes.length;
+    final header = BytesBuilder();
+    void writeString(String s) => header.add(s.codeUnits);
+    void writeUint32(int v) {
+      header.addByte(v & 0xFF);
+      header.addByte((v >> 8) & 0xFF);
+      header.addByte((v >> 16) & 0xFF);
+      header.addByte((v >> 24) & 0xFF);
+    }
+    void writeUint16(int v) {
+      header.addByte(v & 0xFF);
+      header.addByte((v >> 8) & 0xFF);
+    }
+
+    writeString('RIFF');
+    writeUint32(36 + byteCount);
+    writeString('WAVE');
+    writeString('fmt ');
+    writeUint32(16); // PCM chunk size
+    writeUint16(1); // PCM format
+    writeUint16(channels);
+    writeUint32(sampleRate);
+    writeUint32(sampleRate * channels * bytesPerSample);
+    writeUint16(channels * bytesPerSample);
+    writeUint16(8 * bytesPerSample);
+    writeString('data');
+    writeUint32(byteCount);
+
+    final out = BytesBuilder();
+    out.add(header.toBytes());
+    out.add(pcmBytes);
+    return out.toBytes();
   }
 
   @override

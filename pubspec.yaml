@@ -44,7 +44,6 @@ dependencies:
 
   # Audio
   just_audio: ^0.9.42
-  flutter_tts: ^4.2.3
 
   # Export & Sharing
   pdf: ^3.11.1
